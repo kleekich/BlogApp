@@ -4,6 +4,13 @@ import { fetchPosts } from '../actions';
 
 
 class PostsIndex extends Component {
+
+	//React-life cyle method call When this component is ready to be rendered
+	componentDidMount() {
+		this.props.fetchPosts();
+	}
+
+
 	render() {
 		return (
 

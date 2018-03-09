@@ -10,17 +10,11 @@ class PostsNew extends Component {
 				<input
 					className="form-control"
 					type="text"
-					/*
-					onChange={field.input.onChange}
-					onFocus={field.input.onFocus}
-					onBlur= {field.input.onBlur}
-					*/
-					{...field.input}	
+					{...field.input}
 				/>
 				{field.meta.touched ? field.meta.error : ''}
 			</div>
 		);
-
 	}
 
 	onSubmit(values) {
@@ -30,7 +24,6 @@ class PostsNew extends Component {
 
 	render() {
 		const { handleSubmit } = this.props; //this.props is provided on behalf of redux-form
-
 		return (
 			//handleSubmit is for redux-side handling such as validation, 
 			//If it is ok, then, it calls onSubmit that we defined.
@@ -41,8 +34,8 @@ class PostsNew extends Component {
 					component={this.renderField}
 				/>
 				<Field
-					label="Tags"
-					name="tags"
+					label="Categories"
+					name="categories"
 					component={this.renderField}
 				/>
 				<Field
@@ -80,7 +73,7 @@ function validate(values) {
 
 
 //wired up reduxForm to PostsNew
-export default reduxForm ( {
+export default reduxForm({
 	validate,
 	form: 'PostsNewForm'
-}) (PostsNew);
+})(PostsNew);

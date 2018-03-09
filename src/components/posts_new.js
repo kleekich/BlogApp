@@ -3,35 +3,38 @@ import { Field, reduxForm } from 'redux-form';
 
 
 class PostsNew extends Component {
-
-
 	renderField(field) {
 		return (
-
-
 			<div className="form-group">
 				<label> {field.label} </label>
 				<input
-				className="form-control"
-				type="text"
-				/*
-				onChange={field.input.onChange}
-				onFocus={field.input.onFocus}
-				onBlur= {field.input.onBlur}
-				*/
-					{...field.input}
-				
+					className="form-control"
+					type="text"
+					/*
+					onChange={field.input.onChange}
+					onFocus={field.input.onFocus}
+					onBlur= {field.input.onBlur}
+					*/
+					{...field.input}	
 				/>
-				{field.meta.error}
+				{field.meta.touched ? field.meta.error : ''}
 			</div>
-
 		);
 
 	}
 
+	onSubmit(values) {
+		//this === component
+		console.log(values);
+	}
+
 	render() {
+		const { handleSubmit } = this.props; //this.props is provided on behalf of redux-form
+
 		return (
-			<form>
+			//handleSubmit is for redux-side handling such as validation, 
+			//If it is ok, then, it calls onSubmit that we defined.
+			<form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
 				<Field
 					label="Title"
 					name="title"//it is connect to in validate function errors.title
@@ -44,14 +47,12 @@ class PostsNew extends Component {
 				/>
 				<Field
 					label="Post Content"
-					name="tags" 
+					name="content" 
 					component={this.renderField}
 				/>
+				<button type="submit" className="btn btn-primary">Submit</button>
 			</form>
-
-
 		);
-
 	}
 }
 
@@ -63,7 +64,7 @@ function validate(values) {
 
 	//Validate the inputs from 'values'
 	if (!values.title){
-		errors.title = "Enter a title that is at least 3 characters!";
+		errors.title = "Enter a title!";
 	}
 	if(!values.categories) {
 		errors.categories = "Enter some categories";
@@ -77,7 +78,9 @@ function validate(values) {
 	return errors;
 }
 
-export default reduxForm({
+
+//wired up reduxForm to PostsNew
+export default reduxForm ( {
 	validate,
 	form: 'PostsNewForm'
-})(PostsNew);
+}) (PostsNew);

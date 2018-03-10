@@ -16,7 +16,7 @@ export default function(state = {}, action) {
 			// newState[post.id] = post;
 			// return newState;
 				//ES6: Take all existing stateand add the post we fatched
-			return { ...state, [action.payload.data.id]: action.payload.data }
+			return { ...state, [action.payload.data.id]: action.payload.data };
 		default:
 			return state;
 	}

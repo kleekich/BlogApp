@@ -6,14 +6,17 @@ import { fetchPost } from '../actions';
 class PostsShow extends Component{
 	//it is called automatically once the component was render to the DOM.
 	componentDidMount() {
-		//We need to get id by accessing URL/provided by react-router
-		const { id } = this.props.match.params;
-		this.props.fetchPost(id);
+		//We avoid fetching data twice for the post 
+		if(!this.props.posts){
+			//We need to get id by accessing URL/provided by react-router
+			const { id } = this.props.match.params;
+			this.props.fetchPost(id);
+		}
+
 	}
 
 	render() {
 		//this.props === ownProps
-		
 		const { post } = this.props;
 
 		if(!post) {
